@@ -1,475 +1,431 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="zh-TW">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.4">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>睡眠與健康互動儀表板</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 移除瀏覽器預設的數字輸入箭頭 (Chrome, Safari, Edge, Opera) */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
 </head>
-<body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="zh-TW"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;睡眠與健康互動儀表板&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* 移除瀏覽器預設的數字輸入箭頭 (Chrome, Safari, Edge, Opera) */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input::-webkit-outer-spin-button,</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input::-webkit-inner-spin-button {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>-webkit-appearance: none;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>/* Firefox */</p>
-<p class="p1"><span class="Apple-converted-space">        </span>input[type=number] {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>-moz-appearance: textfield;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.card-hover:hover {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>transform: translateY(-2px);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.input-group:focus-within {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>border-color: #6366f1;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>ring: 2px;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>ring-color: #e0e7ff;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body class="bg-slate-50 text-slate-800 font-sans antialiased"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="max-w-7xl mx-auto p-4 md:p-8"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Header --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;h1 class="text-3xl font-bold text-slate-900 flex items-center gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"&gt;&lt;path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/&gt;&lt;path d="m9 12 2 2 4-4"/&gt;&lt;path d="M5 12h14"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>健康數據實驗室</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-slate-500 text-sm mt-1"&gt;即時模擬與分析您的生理恢復狀態&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm flex items-center gap-2 text-sm font-medium"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="relative flex h-3 w-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                  </span>&lt;span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>系統狀態：即時連動中</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="grid grid-cols-1 lg:grid-cols-12 gap-8"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 左側控制面板 (Controls) --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="lg:col-span-4 space-y-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h2 class="font-bold text-lg mb-4 flex items-center gap-2 border-b pb-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-600"&gt;&lt;line x1="4" y1="21" x2="4" y2="14"/&gt;&lt;line x1="4" y1="10" x2="4" y2="3"/&gt;&lt;line x1="12" y1="21" x2="12" y2="12"/&gt;&lt;line x1="12" y1="8" x2="12" y2="3"/&gt;&lt;line x1="20" y1="21" x2="20" y2="16"/&gt;&lt;line x1="20" y1="12" x2="20" y2="3"/&gt;&lt;line x1="1" y1="14" x2="7" y2="14"/&gt;&lt;line x1="9" y1="8" x2="15" y2="8"/&gt;&lt;line x1="17" y1="16" x2="23" y2="16"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>數據輸入控制</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h2&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- 核心指標 (數字輸入) --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-3 gap-3 mb-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label class="block text-xs font-bold text-slate-500 mb-1"&gt;分數&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="number" id="input-score" value="90" min="0" max="100" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-center font-bold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label class="block text-xs font-bold text-slate-500 mb-1"&gt;RHR (bpm)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="number" id="input-rhr" value="50" min="0" max="200" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-center font-bold text-rose-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label class="block text-xs font-bold text-slate-500 mb-1"&gt;HRV (ms)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="number" id="input-hrv" value="85" min="0" max="200" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-center font-bold text-orange-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;hr class="border-slate-100 my-4"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- 睡眠時間 (時/分輸入) --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3"&gt;睡眠階段詳情&lt;/h3&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                    </span></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="space-y-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Deep Sleep --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label class="text-sm font-bold text-indigo-800 block mb-2"&gt;深層睡眠 (Deep)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="relative w-1/2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="number" id="input-deep-h" value="1" min="0" max="12" class="w-full pl-3 pr-8 py-1.5 border border-indigo-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6"&gt;時&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="relative w-1/2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="number" id="input-deep-m" value="22" min="0" max="59" class="w-full pl-3 pr-8 py-1.5 border border-indigo-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6"&gt;分&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- REM Sleep --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-blue-50 p-3 rounded-lg border border-blue-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label class="text-sm font-bold text-blue-800 block mb-2"&gt;快速動眼期 (REM)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="relative w-1/2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="number" id="input-rem-h" value="1" min="0" max="12" class="w-full pl-3 pr-8 py-1.5 border border-blue-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6"&gt;時&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="relative w-1/2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="number" id="input-rem-m" value="48" min="0" max="59" class="w-full pl-3 pr-8 py-1.5 border border-blue-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6"&gt;分&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Light Sleep --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-sky-50 p-3 rounded-lg border border-sky-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label class="text-sm font-bold text-sky-800 block mb-2"&gt;淺層睡眠 (Light)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="relative w-1/2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="number" id="input-light-h" value="4" min="0" max="12" class="w-full pl-3 pr-8 py-1.5 border border-sky-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6"&gt;時&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="relative w-1/2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="number" id="input-light-m" value="20" min="0" max="59" class="w-full pl-3 pr-8 py-1.5 border border-sky-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6"&gt;分&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Awake --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-amber-50 p-3 rounded-lg border border-amber-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;label class="text-sm font-bold text-amber-800 block mb-2"&gt;清醒時間 (Awake)&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="relative w-1/2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="number" id="input-awake-h" value="0" min="0" max="12" class="w-full pl-3 pr-8 py-1.5 border border-amber-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6"&gt;時&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div class="relative w-1/2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;input type="number" id="input-awake-m" value="11" min="0" max="59" class="w-full pl-3 pr-8 py-1.5 border border-amber-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6"&gt;分&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                        </span></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="pt-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div class="flex justify-between mb-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;label class="text-sm font-medium text-slate-700"&gt;入睡時間&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;input type="time" id="input-bedtime" value="23:40" class="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-indigo-500" onchange="updateDashboard()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- 恢復建議控制面板 --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-indigo-900 text-white p-6 rounded-xl shadow-lg"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;h3 class="font-bold mb-2 flex items-center gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;line x1="12" y1="16" x2="12" y2="12"/&gt;&lt;line x1="12" y1="8" x2="12.01" y2="8"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>AI 狀態分析</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;p class="text-indigo-200 text-sm mb-4" id="ai-summary"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>根據目前的輸入數據，您的身體處於巔峰狀態。</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="text-xs bg-indigo-800 rounded p-2" id="ai-tags"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>#高強度訓練 #專注力極佳</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- 右側顯示儀表板 (Dashboard) --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="lg:col-span-8 space-y-6"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Top Cards --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid grid-cols-1 md:grid-cols-3 gap-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- RHR Card --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover transition-all duration-300"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex justify-between items-start mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="p-2 bg-rose-100 text-rose-600 rounded-lg"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M22 12h-4l-3 9L9 3l-3 9H2"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-700" id="status-rhr"&gt;優異&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-slate-500 text-sm font-medium"&gt;靜止心率 (RHR)&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex items-baseline gap-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-3xl font-bold text-slate-800" id="disp-rhr"&gt;50&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-slate-400 text-sm"&gt;bpm&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- HRV Card --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover transition-all duration-300"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex justify-between items-start mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="p-2 bg-orange-100 text-orange-600 rounded-lg"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-700" id="status-hrv"&gt;優異&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-slate-500 text-sm font-medium"&gt;心率變異度 (HRV)&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex items-baseline gap-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-3xl font-bold text-slate-800" id="disp-hrv"&gt;85&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-slate-400 text-sm"&gt;ms&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Score Card --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover transition-all duration-300"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex justify-between items-start mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="p-2 bg-emerald-100 text-emerald-600 rounded-lg"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;rect x="2" y="3" width="20" height="14" rx="2" ry="2"/&gt;&lt;line x1="8" y1="21" x2="16" y2="21"/&gt;&lt;line x1="12" y1="17" x2="12" y2="21"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;span class="text-xs font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-700" id="status-score"&gt;優異&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 class="text-slate-500 text-sm font-medium"&gt;綜合睡眠分數&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex items-baseline gap-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-3xl font-bold text-slate-800" id="disp-score"&gt;90&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-slate-400 text-sm"&gt;/100&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Main Chart Area --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center justify-between mb-6"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex items-center gap-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-500"&gt;&lt;path d="M12 20h9"/&gt;&lt;path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 class="text-lg font-bold"&gt;睡眠結構可視化&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="text-sm text-slate-500"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>總時長: &lt;span id="total-sleep-time" class="font-bold text-slate-700"&gt;0h 0m&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Stacked Bar Chart --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="h-6 w-full flex rounded-full overflow-hidden mb-8 shadow-inner bg-slate-100"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="bar-deep" class="bg-indigo-700 transition-all duration-500 flex items-center justify-center text-[10px] text-white/80" style="width: 20%"&gt;Deep&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="bar-rem" class="bg-indigo-400 transition-all duration-500 flex items-center justify-center text-[10px] text-white/80" style="width: 25%"&gt;REM&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="bar-light" class="bg-indigo-200 transition-all duration-500 flex items-center justify-center text-[10px] text-indigo-900/60" style="width: 50%"&gt;Light&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div id="bar-awake" class="bg-amber-300 transition-all duration-500 flex items-center justify-center text-[10px] text-amber-800/80" style="width: 5%"&gt;Awake&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;!-- Detailed Progress Bars --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                        </span></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Deep --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex justify-between text-sm mb-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="font-medium text-slate-700"&gt;深層睡眠 (Deep)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-slate-500" id="text-deep"&gt;0%&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div id="progress-deep" class="h-2 rounded-full bg-indigo-700 transition-all duration-500" style="width: 0%"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xs text-slate-400 mt-1"&gt;目標: 13-23% (修復身體)&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- REM --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex justify-between text-sm mb-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="font-medium text-slate-700"&gt;快速動眼期 (REM)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-slate-500" id="text-rem"&gt;0%&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div id="progress-rem" class="h-2 rounded-full bg-indigo-400 transition-all duration-500" style="width: 0%"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xs text-slate-400 mt-1"&gt;目標: 20-25% (修復大腦)&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Light --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex justify-between text-sm mb-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="font-medium text-slate-700"&gt;淺層睡眠 (Light)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-slate-500" id="text-light"&gt;0%&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div id="progress-light" class="h-2 rounded-full bg-indigo-200 transition-all duration-500" style="width: 0%"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Awake --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="flex justify-between text-sm mb-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="font-medium text-slate-700"&gt;清醒時間 (Awake)&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-slate-500" id="text-awake"&gt;0%&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div id="progress-awake" class="h-2 rounded-full bg-amber-300 transition-all duration-500" style="width: 0%"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Timeline Info --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-gradient-to-r from-slate-100 to-white rounded-xl p-6 border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center gap-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-indigo-600 p-2 rounded-full text-white"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;circle cx="12" cy="12" r="10"/&gt;&lt;polyline points="12 6 12 12 16 14"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xs text-slate-500 font-bold uppercase"&gt;入睡時間&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="font-mono text-lg font-bold text-slate-800" id="disp-bedtime"&gt;23:40&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p2"><span class="Apple-converted-space">                    </span></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="hidden md:block h-px flex-1 bg-slate-300 mx-4"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="flex items-center gap-3"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="bg-amber-400 p-2 rounded-full text-white"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"&gt;&lt;path d="M12 2v2"/&gt;&lt;path d="M12 20v2"/&gt;&lt;path d="m4.93 4.93 1.41 1.41"/&gt;&lt;path d="m17.66 17.66 1.41 1.41"/&gt;&lt;path d="M2 12h2"/&gt;&lt;path d="M20 12h2"/&gt;&lt;path d="m6.34 17.66-1.41 1.41"/&gt;&lt;path d="m19.07 4.93-1.41 1.41"/&gt;&lt;/svg&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="text-xs text-slate-500 font-bold uppercase"&gt;預估起床&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;p class="font-mono text-lg font-bold text-slate-800" id="disp-wakeup"&gt;07:21&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 格式化分鐘為 "1h 20m"</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function formatMinutes(minutes) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const h = Math.floor(minutes / 60);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const m = minutes % 60;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return h &gt; 0 ? `${h}小時 ${m}分` : `${m}分`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 根據數值決定狀態標籤與顏色</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function getStatus(value, type) {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let status = '普通';</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let color = 'bg-yellow-100 text-yellow-700';</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (type === 'score') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (value &gt;= 85) { status = '優異'; color = 'bg-emerald-100 text-emerald-700'; }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>else if (value &gt;= 70) { status = '良好'; color = 'bg-blue-100 text-blue-700'; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} else if (type === 'hrv') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (value &gt;= 70) { status = '優異'; color = 'bg-emerald-100 text-emerald-700'; }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>else if (value &gt;= 50) { status = '良好'; color = 'bg-blue-100 text-blue-700'; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} else if (type === 'rhr') {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (value &lt;= 55) { status = '優異'; color = 'bg-emerald-100 text-emerald-700'; }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>else if (value &lt;= 65) { status = '良好'; color = 'bg-blue-100 text-blue-700'; }</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>return { text: status, class: color };</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 計算並更新所有顯示</p>
-<p class="p1"><span class="Apple-converted-space">        </span>function updateDashboard() {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 1. 獲取輸入值 (將空值視為 0)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const getVal = (id) =&gt; parseInt(document.getElementById(id).value) || 0;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const score = getVal('input-score');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const rhr = getVal('input-rhr');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const hrv = getVal('input-hrv');</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 計算各階段總分鐘數 (小時 * 60 + 分鐘)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const deep = (getVal('input-deep-h') * 60) + getVal('input-deep-m');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const rem = (getVal('input-rem-h') * 60) + getVal('input-rem-m');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const light = (getVal('input-light-h') * 60) + getVal('input-light-m');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const awake = (getVal('input-awake-h') * 60) + getVal('input-awake-m');</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const bedtime = document.getElementById('input-bedtime').value;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 2. 基礎計算</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const totalSleep = deep + rem + light;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const totalTimeInBed = totalSleep + awake;</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 避免除以零</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const safeTotal = totalTimeInBed === 0 ? 1 : totalTimeInBed;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const pDeep = Math.round((deep / safeTotal) * 100);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const pRem = Math.round((rem / safeTotal) * 100);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const pLight = Math.round((light / safeTotal) * 100);</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const pAwake = Math.round((awake / safeTotal) * 100);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 3. 更新 UI 數值文字</p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 注意：核心指標輸入框本身已是顯示值，無需更新其 innerText，只需更新顯示用的 Dashboard 文字</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('disp-score').innerText = score;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('disp-rhr').innerText = rhr;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('disp-hrv').innerText = hrv;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('total-sleep-time').innerText = formatMinutes(totalSleep);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 4. 更新狀態標籤</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const scoreStatus = getStatus(score, 'score');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const rhrStatus = getStatus(rhr, 'rhr');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>const hrvStatus = getStatus(hrv, 'hrv');</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const scoreEl = document.getElementById('status-score');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>scoreEl.innerText = scoreStatus.text;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>scoreEl.className = `text-xs font-bold px-2 py-1 rounded-full ${scoreStatus.class}`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const rhrEl = document.getElementById('status-rhr');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>rhrEl.innerText = rhrStatus.text;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>rhrEl.className = `text-xs font-bold px-2 py-1 rounded-full ${rhrStatus.class}`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>const hrvEl = document.getElementById('status-hrv');</p>
-<p class="p1"><span class="Apple-converted-space">            </span>hrvEl.innerText = hrvStatus.text;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>hrvEl.className = `text-xs font-bold px-2 py-1 rounded-full ${hrvStatus.class}`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 5. 更新進度條與圖表</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('text-deep').innerText = `${pDeep}% (${formatMinutes(deep)})`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('progress-deep').style.width = `${pDeep}%`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('bar-deep').style.width = `${pDeep}%`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('text-rem').innerText = `${pRem}% (${formatMinutes(rem)})`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('progress-rem').style.width = `${pRem}%`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('bar-rem').style.width = `${pRem}%`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('text-light').innerText = `${pLight}% (${formatMinutes(light)})`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('progress-light').style.width = `${pLight}%`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('bar-light').style.width = `${pLight}%`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('text-awake').innerText = `${pAwake}% (${formatMinutes(awake)})`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('progress-awake').style.width = `${pAwake}%`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('bar-awake').style.width = `${pAwake}%`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 6. 計算起床時間</p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (bedtime) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const [hours, mins] = bedtime.split(':').map(Number);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const date = new Date();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>date.setHours(hours, mins, 0);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>// 加上總躺床時間</p>
-<p class="p1"><span class="Apple-converted-space">                </span>date.setMinutes(date.getMinutes() + totalTimeInBed);</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>const wakeHours = date.getHours().toString().padStart(2, '0');</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const wakeMins = date.getMinutes().toString().padStart(2, '0');</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('disp-bedtime').innerText = bedtime;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('disp-wakeup').innerText = `${wakeHours}:${wakeMins}`;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 7. 更新 AI 建議 (簡單邏輯)</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let aiText = "";</p>
-<p class="p1"><span class="Apple-converted-space">            </span>let aiTags = "";</p>
-<p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (score &gt; 80 &amp;&amp; hrv &gt; 60) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>aiText = "您的身體恢復極佳，自律神經系統平衡。建議今日可進行高強度訓練或處理困難的工作任務。";</p>
-<p class="p1"><span class="Apple-converted-space">                </span>aiTags = "#高強度運動 #深度工作 #身心巔峰";</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} else if (score &lt; 70 || hrv &lt; 40) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>aiText = "數據顯示您的身體尚未完全恢復或累積了壓力。建議今日以主動恢復為主，如瑜伽、散步或冥想。";</p>
-<p class="p1"><span class="Apple-converted-space">                </span>aiTags = "#主動恢復 #早點休息 #避免咖啡因";</p>
-<p class="p1"><span class="Apple-converted-space">            </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>aiText = "您的狀態維持在平均水準。適合進行中等強度的日常活動，保持規律作息即可。";</p>
-<p class="p1"><span class="Apple-converted-space">                </span>aiTags = "#維持現狀 #穩定輸出";</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('ai-summary').innerText = aiText;</p>
-<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('ai-tags').innerText = aiTags;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// 初始化</p>
-<p class="p1"><span class="Apple-converted-space">        </span>window.onload = updateDashboard;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+    <div class="max-w-7xl mx-auto p-4 md:p-8">
+        
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-600"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/><path d="M5 12h14"/></svg>
+                    健康數據實驗室
+                </h1>
+                <p class="text-slate-500 text-sm mt-1">即時模擬與分析您的生理恢復狀態</p>
+            </div>
+            <div class="bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm flex items-center gap-2 text-sm font-medium">
+                <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                </span>
+                系統狀態：即時連動中
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h2 class="font-bold text-lg mb-4 flex items-center gap-2 border-b pb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-600"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+                        數據輸入控制
+                    </h2>
+
+                    <div class="grid grid-cols-3 gap-3 mb-6">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">分數</label>
+                            <input type="number" id="input-score" value="90" min="0" max="100" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-center font-bold text-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="updateDashboard()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">RHR (bpm)</label>
+                            <input type="number" id="input-rhr" value="50" min="0" max="200" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-center font-bold text-rose-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="updateDashboard()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-500 mb-1">HRV (ms)</label>
+                            <input type="number" id="input-hrv" value="85" min="0" max="200" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-center font-bold text-orange-600 focus:outline-none focus:ring-2 focus:ring-indigo-500" oninput="updateDashboard()">
+                        </div>
+                    </div>
+
+                    <hr class="border-slate-100 my-4">
+
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">睡眠階段詳情</h3>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+                            <label class="text-sm font-bold text-indigo-800 block mb-2">深層睡眠 (Deep)</label>
+                            <div class="flex gap-2">
+                                <div class="relative w-1/2">
+                                    <input type="number" id="input-deep-h" value="1" min="0" max="12" class="w-full pl-3 pr-8 py-1.5 border border-indigo-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()">
+                                    <span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6">時</span>
+                                </div>
+                                <div class="relative w-1/2">
+                                    <input type="number" id="input-deep-m" value="22" min="0" max="59" class="w-full pl-3 pr-8 py-1.5 border border-indigo-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()">
+                                    <span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6">分</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 p-3 rounded-lg border border-blue-100">
+                            <label class="text-sm font-bold text-blue-800 block mb-2">快速動眼期 (REM)</label>
+                            <div class="flex gap-2">
+                                <div class="relative w-1/2">
+                                    <input type="number" id="input-rem-h" value="1" min="0" max="12" class="w-full pl-3 pr-8 py-1.5 border border-blue-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()">
+                                    <span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6">時</span>
+                                </div>
+                                <div class="relative w-1/2">
+                                    <input type="number" id="input-rem-m" value="48" min="0" max="59" class="w-full pl-3 pr-8 py-1.5 border border-blue-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()">
+                                    <span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6">分</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-sky-50 p-3 rounded-lg border border-sky-100">
+                            <label class="text-sm font-bold text-sky-800 block mb-2">淺層睡眠 (Light)</label>
+                            <div class="flex gap-2">
+                                <div class="relative w-1/2">
+                                    <input type="number" id="input-light-h" value="4" min="0" max="12" class="w-full pl-3 pr-8 py-1.5 border border-sky-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()">
+                                    <span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6">時</span>
+                                </div>
+                                <div class="relative w-1/2">
+                                    <input type="number" id="input-light-m" value="20" min="0" max="59" class="w-full pl-3 pr-8 py-1.5 border border-sky-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()">
+                                    <span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6">分</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50 p-3 rounded-lg border border-amber-100">
+                            <label class="text-sm font-bold text-amber-800 block mb-2">清醒時間 (Awake)</label>
+                            <div class="flex gap-2">
+                                <div class="relative w-1/2">
+                                    <input type="number" id="input-awake-h" value="0" min="0" max="12" class="w-full pl-3 pr-8 py-1.5 border border-amber-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()">
+                                    <span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6">時</span>
+                                </div>
+                                <div class="relative w-1/2">
+                                    <input type="number" id="input-awake-m" value="11" min="0" max="59" class="w-full pl-3 pr-8 py-1.5 border border-amber-200 rounded text-sm focus:outline-none focus:border-indigo-500" oninput="updateDashboard()">
+                                    <span class="absolute right-3 top-1.5 text-xs text-slate-400 leading-6">分</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-2">
+                            <div class="flex justify-between mb-1">
+                                <label class="text-sm font-medium text-slate-700">入睡時間</label>
+                            </div>
+                            <input type="time" id="input-bedtime" value="23:40" class="w-full border border-slate-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:border-indigo-500" onchange="updateDashboard()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-indigo-900 text-white p-6 rounded-xl shadow-lg">
+                    <h3 class="font-bold mb-2 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        AI 狀態分析
+                    </h3>
+                    <p class="text-indigo-200 text-sm mb-4" id="ai-summary">
+                        根據目前的輸入數據，您的身體處於巔峰狀態。
+                    </p>
+                    <div class="text-xs bg-indigo-800 rounded p-2" id="ai-tags">
+                        #高強度訓練 #專注力極佳
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-6">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover transition-all duration-300">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 bg-rose-100 text-rose-600 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                            </div>
+                            <span class="text-xs font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-700" id="status-rhr">優異</span>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-500 text-sm font-medium">靜止心率 (RHR)</h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-3xl font-bold text-slate-800" id="disp-rhr">50</span>
+                                <span class="text-slate-400 text-sm">bpm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover transition-all duration-300">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 bg-orange-100 text-orange-600 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            </div>
+                            <span class="text-xs font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-700" id="status-hrv">優異</span>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-500 text-sm font-medium">心率變異度 (HRV)</h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-3xl font-bold text-slate-800" id="disp-hrv">85</span>
+                                <span class="text-slate-400 text-sm">ms</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 card-hover transition-all duration-300">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                            </div>
+                            <span class="text-xs font-bold px-2 py-1 rounded-full bg-emerald-100 text-emerald-700" id="status-score">優異</span>
+                        </div>
+                        <div>
+                            <h3 class="text-slate-500 text-sm font-medium">綜合睡眠分數</h3>
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-3xl font-bold text-slate-800" id="disp-score">90</span>
+                                <span class="text-slate-400 text-sm">/100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+                    <div class="flex items-center justify-between mb-6">
+                        <div class="flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-indigo-500"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                            <h2 class="text-lg font-bold">睡眠結構可視化</h2>
+                        </div>
+                        <div class="text-sm text-slate-500">
+                            總時長: <span id="total-sleep-time" class="font-bold text-slate-700">0h 0m</span>
+                        </div>
+                    </div>
+
+                    <div class="h-6 w-full flex rounded-full overflow-hidden mb-8 shadow-inner bg-slate-100">
+                        <div id="bar-deep" class="bg-indigo-700 transition-all duration-500 flex items-center justify-center text-[10px] text-white/80" style="width: 20%">Deep</div>
+                        <div id="bar-rem" class="bg-indigo-400 transition-all duration-500 flex items-center justify-center text-[10px] text-white/80" style="width: 25%">REM</div>
+                        <div id="bar-light" class="bg-indigo-200 transition-all duration-500 flex items-center justify-center text-[10px] text-indigo-900/60" style="width: 50%">Light</div>
+                        <div id="bar-awake" class="bg-amber-300 transition-all duration-500 flex items-center justify-center text-[10px] text-amber-800/80" style="width: 5%">Awake</div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                        
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-slate-700">深層睡眠 (Deep)</span>
+                                <span class="text-slate-500" id="text-deep">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                <div id="progress-deep" class="h-2 rounded-full bg-indigo-700 transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">目標: 13-23% (修復身體)</p>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-slate-700">快速動眼期 (REM)</span>
+                                <span class="text-slate-500" id="text-rem">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                <div id="progress-rem" class="h-2 rounded-full bg-indigo-400 transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">目標: 20-25% (修復大腦)</p>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-slate-700">淺層睡眠 (Light)</span>
+                                <span class="text-slate-500" id="text-light">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                <div id="progress-light" class="h-2 rounded-full bg-indigo-200 transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium text-slate-700">清醒時間 (Awake)</span>
+                                <span class="text-slate-500" id="text-awake">0%</span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                <div id="progress-awake" class="h-2 rounded-full bg-amber-300 transition-all duration-500" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-slate-100 to-white rounded-xl p-6 border border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-indigo-600 p-2 rounded-full text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-bold uppercase">入睡時間</p>
+                            <p class="font-mono text-lg font-bold text-slate-800" id="disp-bedtime">23:40</p>
+                        </div>
+                    </div>
+                    
+                    <div class="hidden md:block h-px flex-1 bg-slate-300 mx-4"></div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="bg-amber-400 p-2 rounded-full text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-500 font-bold uppercase">預估起床</p>
+                            <p class="font-mono text-lg font-bold text-slate-800" id="disp-wakeup">07:21</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 格式化分鐘為 "1h 20m"
+        function formatMinutes(minutes) {
+            const h = Math.floor(minutes / 60);
+            const m = minutes % 60;
+            return h > 0 ? `${h}小時 ${m}分` : `${m}分`;
+        }
+
+        // 根據數值決定狀態標籤與顏色
+        function getStatus(value, type) {
+            let status = '普通';
+            let color = 'bg-yellow-100 text-yellow-700';
+
+            if (type === 'score') {
+                if (value >= 85) { status = '優異'; color = 'bg-emerald-100 text-emerald-700'; }
+                else if (value >= 70) { status = '良好'; color = 'bg-blue-100 text-blue-700'; }
+            } else if (type === 'hrv') {
+                if (value >= 70) { status = '優異'; color = 'bg-emerald-100 text-emerald-700'; }
+                else if (value >= 50) { status = '良好'; color = 'bg-blue-100 text-blue-700'; }
+            } else if (type === 'rhr') {
+                if (value <= 55) { status = '優異'; color = 'bg-emerald-100 text-emerald-700'; }
+                else if (value <= 65) { status = '良好'; color = 'bg-blue-100 text-blue-700'; }
+            }
+            return { text: status, class: color };
+        }
+
+        // 計算並更新所有顯示
+        function updateDashboard() {
+            // 1. 獲取輸入值 (將空值視為 0)
+            const getVal = (id) => parseInt(document.getElementById(id).value) || 0;
+
+            const score = getVal('input-score');
+            const rhr = getVal('input-rhr');
+            const hrv = getVal('input-hrv');
+            
+            // 計算各階段總分鐘數 (小時 * 60 + 分鐘)
+            const deep = (getVal('input-deep-h') * 60) + getVal('input-deep-m');
+            const rem = (getVal('input-rem-h') * 60) + getVal('input-rem-m');
+            const light = (getVal('input-light-h') * 60) + getVal('input-light-m');
+            const awake = (getVal('input-awake-h') * 60) + getVal('input-awake-m');
+            
+            const bedtime = document.getElementById('input-bedtime').value;
+
+            // 2. 基礎計算
+            const totalSleep = deep + rem + light;
+            const totalTimeInBed = totalSleep + awake;
+            
+            // 避免除以零
+            const safeTotal = totalTimeInBed === 0 ? 1 : totalTimeInBed;
+
+            const pDeep = Math.round((deep / safeTotal) * 100);
+            const pRem = Math.round((rem / safeTotal) * 100);
+            const pLight = Math.round((light / safeTotal) * 100);
+            const pAwake = Math.round((awake / safeTotal) * 100);
+
+            // 3. 更新 UI 數值文字
+            document.getElementById('disp-score').innerText = score;
+            document.getElementById('disp-rhr').innerText = rhr;
+            document.getElementById('disp-hrv').innerText = hrv;
+
+            document.getElementById('total-sleep-time').innerText = formatMinutes(totalSleep);
+
+            // 4. 更新狀態標籤
+            const scoreStatus = getStatus(score, 'score');
+            const rhrStatus = getStatus(rhr, 'rhr');
+            const hrvStatus = getStatus(hrv, 'hrv');
+
+            const scoreEl = document.getElementById('status-score');
+            scoreEl.innerText = scoreStatus.text;
+            scoreEl.className = `text-xs font-bold px-2 py-1 rounded-full ${scoreStatus.class}`;
+
+            const rhrEl = document.getElementById('status-rhr');
+            rhrEl.innerText = rhrStatus.text;
+            rhrEl.className = `text-xs font-bold px-2 py-1 rounded-full ${rhrStatus.class}`;
+
+            const hrvEl = document.getElementById('status-hrv');
+            hrvEl.innerText = hrvStatus.text;
+            hrvEl.className = `text-xs font-bold px-2 py-1 rounded-full ${hrvStatus.class}`;
+
+            // 5. 更新進度條與圖表
+            document.getElementById('text-deep').innerText = `${pDeep}% (${formatMinutes(deep)})`;
+            document.getElementById('progress-deep').style.width = `${pDeep}%`;
+            document.getElementById('bar-deep').style.width = `${pDeep}%`;
+
+            document.getElementById('text-rem').innerText = `${pRem}% (${formatMinutes(rem)})`;
+            document.getElementById('progress-rem').style.width = `${pRem}%`;
+            document.getElementById('bar-rem').style.width = `${pRem}%`;
+
+            document.getElementById('text-light').innerText = `${pLight}% (${formatMinutes(light)})`;
+            document.getElementById('progress-light').style.width = `${pLight}%`;
+            document.getElementById('bar-light').style.width = `${pLight}%`;
+
+            document.getElementById('text-awake').innerText = `${pAwake}% (${formatMinutes(awake)})`;
+            document.getElementById('progress-awake').style.width = `${pAwake}%`;
+            document.getElementById('bar-awake').style.width = `${pAwake}%`;
+
+            // 6. 計算起床時間
+            if (bedtime) {
+                const [hours, mins] = bedtime.split(':').map(Number);
+                const date = new Date();
+                date.setHours(hours, mins, 0);
+                // 加上總躺床時間
+                date.setMinutes(date.getMinutes() + totalTimeInBed);
+                
+                const wakeHours = date.getHours().toString().padStart(2, '0');
+                const wakeMins = date.getMinutes().toString().padStart(2, '0');
+                
+                document.getElementById('disp-bedtime').innerText = bedtime;
+                document.getElementById('disp-wakeup').innerText = `${wakeHours}:${wakeMins}`;
+            }
+
+            // 7. 更新 AI 建議 (簡單邏輯)
+            let aiText = "";
+            let aiTags = "";
+            
+            if (score > 80 && hrv > 60) {
+                aiText = "您的身體恢復極佳，自律神經系統平衡。建議今日可進行高強度訓練或處理困難的工作任務。";
+                aiTags = "#高強度運動 #深度工作 #身心巔峰";
+            } else if (score < 70 || hrv < 40) {
+                aiText = "數據顯示您的身體尚未完全恢復或累積了壓力。建議今日以主動恢復為主，如瑜伽、散步或冥想。";
+                aiTags = "#主動恢復 #早點休息 #避免咖啡因";
+            } else {
+                aiText = "您的狀態維持在平均水準。適合進行中等強度的日常活動，保持規律作息即可。";
+                aiTags = "#維持現狀 #穩定輸出";
+            }
+            document.getElementById('ai-summary').innerText = aiText;
+            document.getElementById('ai-tags').innerText = aiTags;
+        }
+
+        // 初始化
+        window.onload = updateDashboard;
+    </script>
 </body>
 </html>
